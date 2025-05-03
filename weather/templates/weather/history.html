@@ -1,0 +1,55 @@
+{% extends 'weather/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title mb-4">Search History</h2>
+                
+                {% if searches %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>City</th>
+                                <th>Country</th>
+                                <th>Temperature</th>
+                                <th>Humidity</th>
+                                <th>Wind Speed</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for search in searches %}
+                            <tr>
+                                <td>{{ search.city }}</td>
+                                <td>{{ search.country }}</td>
+                                <td>{{ search.temperature }}°C</td>
+                                <td>{{ search.humidity }}%</td>
+                                <td>{{ search.wind_speed }} m/s</td>
+                                <td class="text-capitalize">{{ search.description }}</td>
+                                <td>{{ search.timestamp|date:"M d, Y H:i" }}</td>
+                                <td>
+                                    <a href="{% url 'index' %}?city={{ search.city }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-search"></i> Search Again
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-4">
+                    <i class="fas fa-history fa-3x mb-3"></i>
+                    <p>No search history available.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
